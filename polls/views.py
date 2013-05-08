@@ -3,8 +3,6 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from polls.models import Choice, Poll
 
-
-
 def vote(request, poll_id):
     p = get_object_or_404(Poll, pk=poll_id)
     try:
@@ -22,3 +20,8 @@ def vote(request, poll_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+ 
+
+def results(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
+    return render(request, 'polls/results.html', {'poll': poll})
